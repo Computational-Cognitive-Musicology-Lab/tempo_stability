@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Tempo Stability}
+\author{bclark66 }
+\date{February 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Introduction
+
+In an interview with the BBC, Jimmy Paige said about recording &quot;Stairway to Heaven&quot; that &quot;One of the cardinal rules when I was a studio musician was that you didn&#39;t speed up.  And I was keen to do something which had an acceleration to it, not only from the musical point of view but from the lyricist, so that the whole thing would start to gain a momentum as it went through, so it wasn&#39;t just a monotone piece.  And by that, I mean that it would subtly speed up, so you&#39;re breaking the number one cardinal rule[1] .&quot; Recording technology has made it relatively easy for musicians to maintain a constant tempo when recording music especially since the introduction of digital recording.  However, performers are aware that part of the &quot;live&quot; feel of a track may be the subtle variations in the tempo.  Whether or not to use a &quot;click track&quot; to keep the tempo stable during the recording of a track has become a topic of artistic debate.
+
+As mentioned earlier, popular musicians have been aware that use of a &quot;click track&quot; has an effect on the aesthetics of a recording.  In an interview with Audioslave, Tim Comerford and Chris Cornell specifically point out that they &quot;don&#39;t play to clicks[5]&quot;, because they want the &quot;organic feel.&quot;  Further, composers and performers are aware that changing tempo for aesthetic reasons can be an effective device[2].
+
+This paper examines historical trends in recording by mining audio features collected by Spotify for 6,500 songs (100 songs for each of the years 1955 – 2019).  Specifically, we compare tempo stability measures of the songs over the time periods to address the following question:
+
+- Was there greater tempo stability over the period 1955 – 2019 as evidenced by the sample of 100 songs per year choses at random from Spotify
+
+\section{Previous Work}
+Previous work
+
+Previously, music scholars have also investigated algorithms for detecting and classifying tempo changes in recordings.  Dannenberg et. al.  developed an algorithm that aids in characterizing tempo data collected from humans tapping the tempo while listening to a recording[3].  Their research focused on developing an algorithm that was able to identify local tempo changes and describe overall tempo variation in a song.  They used the algorithm to show that the variations in tempo for professional musician performances were much smaller than those of amateur musicians.  Our research is similar in that we compare tempo variation, but differs in that we rely on data computed by Spotify using their tempo tracking algorithms.  By doing so, we are able to conduct a wider study that looks at changes over time in a large corpus of popular music.   Lamere [4] graphed beat data collected from audio to allow visualization of tempo changes, demonstrating that proper scaling of the data on both the time and variation axes supports the ability to differentiate tracks that used a click track from those that didn&#39;t.  This study used the Spotify data to identify the songs with the smallest and largest standard deviation in tempo.  Figures 1 – 5 show examples of songs with a very small standard deviation and those with larger standard deviations.  While this study still did not identify a specific threshold in tempo variation that would characterize whether an artist used a click track or not, the anecdotal and visual evidence suggests that use of click tracks (and other production techniques such as sequenced reference tracks) in the recording process produces recordings with less significant variations.
+
+Music scholars have also investigated ways that music technology can improve live performances.  Dannenberg et. al. developed a framework to be used in developing new interfaces between technology and live performances[6].  Their work focused on ways that computer generated music can be synchronized with human players in live performance situations.  The existence of hardware and software systems that allow for coordinated performances between humans and recorded and/or synthesized music suggests that popular musicians today have technology at their disposal that extends beyond a simple click track for synchronizing human and computer-generated musical parts.  It also suggests that tempo stability may not be the only criterion for determining the extent to which recorded music (or even live music) is augmented by technology.
+
+Popular music scholars have also investigated whether small fluctuations in tempo have an impact on the perceived quality of a recording.  In a web-based study Fruhauf et. al. examined whether students perceive rhythm tracks with small variations in tempo as better or poorer quality[8].  Their study found that rhythm tracks that were accurate to the quantized beat were perceived as being higher quality than those that hits that were either slightly ahead or slightly behind the beat.  This finding is contrary to the sentiment expressed by Cornell and other popular musicians who feel that slight timing variations improve the quality of the track.  In this study we look at historical trends in tempo stability to attempt to understand why some controversy surrounds this issue.
+
+\section{Project Overview}
+Project Overview
+
+The goal of this project was to determine whether use of tempo stabilization (&quot;click tracks&quot;) by popular musicians had a statistically significant effect on the tempo stability of popular music over the period 1955 – 2019.  Specifically, we wanted to determine whether the tempo of 6,500 songs randomly chosen (100 from each year) from the Spotify collection over the period would exhibit a trend towards more tempo stability.  To define tempo stability in a measurable way, we used the range of tempi of the sections of a song as returned by the Spotify API, and the overall change in tempo over the timespan of the song.
+
+One of the key decisions we made for this project was to use the Spotify API to collect pre-computed high-level features instead of using lower-level features computed from audio and then deriving higher level statistics from the lower-level features.  The advantages of this approach are that data collection can be done in a matter of hours versus weeks or months if the latter approach is taken.  The approach also requires less technical signal processing expertise.  One of the disadvantages of the approach is that more care has to be taken with making sure the results are valid, given that all the details of the data collection process are not known.
+
+Once we had a measurable way of defining tempo stability and a method for collecting the data, we could define the research question as &quot;Given that recording technology provides musicians with better tools for maintaining tempo stability, will there be more tempo stability (i.e. less tempo variability) over the period of 1955 – 2019?&quot;  Assuming that the technology is better in 2019 than it was in 1955, we should find that there was a reduction of the variability over the period.
+
+\section{Methodology}
+Methodology
+
+The Spotify database contains features and metadata for approximately forty million songs and is continuously updated with new material based on listener tastes. For this project, we used the song-level tempo, duration, release year and artist and section level tempo and duration.  For data collection, we used the following process:
+
+1. We ran a query against the Spotify API specifying the selection of any album with a vowel in the name and collected the names of 255,000 albums, along with the release year for each album.  The albums contained a total of 1.9 million tracks.
+2. For each year in the range 1955 – 2019, we used the api to collect the track level data for a random selection of 100 tracks from the list of albums
+3. For each of the selected tracks, we collected the section and bar-level statistics from Spotify using the Spotify API.  The statistics we collected were song tempo, song length, section start and duration, section tempo and section key and mode.  We also collected the beat start time for each beat and the bar start time and duration for each bar.  Our Preliminary analysis showed that using the section-level statistics allowed us to summarize tempo stability data in a concise, easy to interpret manner.
+4. For each track we computed additional statistics - minimum and maximum section tempo, the range of tempi from minimum to maximum and the difference in tempo between the sections.  We also computed the normalized tempo range as the difference between the minimum and maximum tempo divided by max tempo, and the normalized difference in tempo as the difference between section tempi divided by the max tempo.  Finally, we computed the standard deviation of the section tempi for each song.
+5. A significant number of tracks (653) had sections where no tempo was computed.  These sections could be characterized as sections that did not contain enough sounds that Spotify&#39;s beat tracker was able to identify as onsets.  The tempo for these sections was set to the median of the tempi for the remaining sections.  A small number of tracks had sections whose tempo differed by a factor of approximately three from neighboring sections.  We determined these to be artifacts of the algorithms used to calculate the tempo by listening to several of the tracks.  We did not adjust the tempo of these sections.
+6. For the normalized tempo range and the normalized tempo difference, we calculated a histogram of the values.  We also calculated a regression analysis by year of the normalized tempo ranges and the normalized tempo differences.
+7. We sorted the tracks by the standard deviation of the section tempos to identify songs that had very stable tempi and those that had highly variable tempi.  We listened to songs at various points in the range to try to summarize the tempo attributes.
+
+
+\section{Results}
+Results
+
+Based on the goodness of fit statistics for both the normalized tempo range and the normalized tempo difference, the data in this sample does not support the hypothesis that there was a reduction in the variability in tempo over the period (tempo difference regression r=.1328, tempo range regression r=.1301).  The histogram for the normalized tempo difference showed that 87% of the songs had overall tempo differences between the sections of between negative 5.3% and 7.2%.  The histogram for the normalized tempo range showed that 86% of the songs had tempo ranges of between 1% and 10.5% (about 1 – 10 bpm).
+
+\section{Discussion and Future Work}
+Discussion and Future Work
+
+Based on the goodness of fit for the regression tests, the data does not support the hypothesis that musicians used technology to significantly reduce the variability in tempo in their recordings.  Previous research has shown that it is possible to make recordings that have near 0 variability, but musicians have not taken advantage of this capability.  This data shows that throughout the period studied tempo stability was extremely high (variability was low).  Based on anecdotal evidence as in [5], at least some musicians believed that trying to improve the &quot;tightness&quot; of a recording by using click tracks reduces the authenticity of the track.  However other research such as [8] suggests that audiences do perceive performances to be higher quality when the tempo of a song stays relatively constant. Assuming the professional musicians are aware (to some extent) of both these points of view, it may be that for most bands, the level of tempo stability that can be achieved without going to extraordinary lengths is &quot;good enough&quot;.
+
+One avenue for further research is to determine whether different sampling methods would produce different results.  For example, in certain genres such as EDM and hip-hop, the heavy use of sequenced midi tracks, samples and loops would seem likely to produce tracks with very stable tempi.  One potential future study might select tracks from the spotify collection based on the standard deviation of the section tempi to see whether certain genres are more likely to have stable tempi than others.
+
+
+\section{References}
+References
+
+[1] Jimmy Page: How Stairway to Heaven was written - BBC News.  Available Online:[_https://www.youtube.com/watch?v=DDo4CA13LbY_](https://www.youtube.com/watch?v=DDo4CA13LbY)
+
+# (Accessed October 26,2019)
+
+[2] [https://music.stackexchange.com/questions/30536/is-it-acceptable-to-change-tempo-in-the-middle-of-a-song-or-is-this-a-bad-idea](https://music.stackexchange.com/questions/30536/is-it-acceptable-to-change-tempo-in-the-middle-of-a-song-or-is-this-a-bad-idea) (Accessed October 27,2019)
+
+[3] R. B. Dannenberg and Mohan, Sukrit, &quot;Characterizing Tempo Changes in Musical Performance.&quot; 05-Aug-2011.
+
+[4] Paul Lamere: In Search of the Click Track, [https://musicmachinery.com/2009/03/02/in-search-of-the-click-track/](https://musicmachinery.com/2009/03/02/in-search-of-the-click-track/)
+
+# [5] Chris Cornell &amp; Tim Commerford - Cuba
+
+ [https://www.youtube.com/watch?v=LUjcrfa7u38](https://www.youtube.com/watch?v=LUjcrfa7u38)
+
+[6] R. B. Dannenberg, &quot;New interfaces for popular music performance,&quot; in _Proceedings of the 7th international conference on New interfaces for musical expression - NIME &#39;07_, New York, New York, 2007, p. 130.
+
+[7] E. Räsänen, O. Pulkkinen, T. Virtanen, M. Zollner, and H. Hennig, &quot;Fluctuations of Hi-Hat Timing and Dynamics in a Virtuoso Drum Track of a Popular Music Recording,&quot; _PLoS ONE_, vol. 10, no. 6, p. e0127902, Jun. 2015.
+
+[8]J. Frühauf, R. Kopiez, and F. Platz, &quot;Music on the timing grid: The influence of microtiming on the perceived groove quality of a simple drum pattern performance,&quot; _Musicae Scientiae_, vol. 17, no. 2, pp. 246–260, Jun. 2013.
+
+[9] S. Dixon, &quot;An Empirical Comparison of Tempo Trackers,&quot; p. 9.
+
+[10] H. Honing, &quot;When a Good Fit is not Good Enough: A Case Study on the Final Ritard,&quot; p. 4, 2004.
+
+\end{document}
