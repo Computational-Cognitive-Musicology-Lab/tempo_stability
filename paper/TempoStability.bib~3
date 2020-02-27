@@ -1,0 +1,76 @@
+@misc{page2014,
+	author = {Page, Jimmy},
+	editor = {Bruckshaw, Amanda},
+	journal = {www.youtube.com/bbcnews},
+	month = {oct},
+	publisher = {BBC News},
+	title = {Jimmy Page: how Stairway to Heaven was written},
+	url = {https://www.youtube.com/watch?v=DDo4CA13LbY},
+	year = {2014}
+}
+
+@article{Fruhauf2013,
+	author = {Fruhauf, J. and Kopiez, R. and Platz, F.},
+	doi = {10.1177/1029864913486793},
+	issn = {1029-8649},
+	journal = {Music{\ae} Scienti{\ae}},
+	language = {en},
+	localfile = {Articles/MusicaeScientiae/Fruhauf2013_Musictiminggrid.pdf},
+	month = {\#jun\#},
+	number = {2},
+	owner = {nat},
+	pages = {246--260},
+	shorttitle = {Music on the timing grid},
+	timestamp = {2015.12.09},
+	title = {Music on the timing grid: {The} influence of microtiming on the perceived groove quality of a simple drum pattern performance},
+	volume = {17},
+	year = {2013}
+}
+
+@article{Temperley2004,
+	author = {Temperley, David},
+	issn = {0730-7829, 1533-8312},
+	journal = {Music Perception: An Interdisciplinary Journal},
+	language = {en},
+	month = {\#mar\#},
+	number = {3},
+	owner = {nat},
+	pages = {313--337},
+	timestamp = {2015.12.09},
+	title = {Communicative {Pressure} and the {Evolution} of {Musical Styles}},
+	volume = {21},
+	year = {2004}
+}
+
+@article{Repp1998,
+	author = {Repp, Bruno H.},
+	journal = {Psychological Research},
+	keywords = {Micro-timing},
+	owner = {nat},
+	pages = {33--43},
+	timestamp = {2016.02.22},
+	title = {Obligatory ``expectations'' of expressive timing induced by perception of musical structure},
+	volume = {61},
+	year = {1998}
+}
+
+@incollection{hudson2001,
+	author = {Hudson, Richard},
+	booktitle = {The New Grove Dictionary of Music and Musicians},
+	doi = {10.1093/gmo/9781561592630.article.24039},
+	month = {jan},
+	publisher = {Oxford University Press},
+	title = {Rubato},
+	year = {2001}
+}
+
+@incollection{fallows2001,
+	author = {Fallows, David},
+	booktitle = {The New Grove Dictionary of Music and Musicians},
+	doi = {10.1093/gmo/9781561592630.article.18521},
+	month = {jan},
+	publisher = {Oxford University Press},
+	title = {Metronome},
+	year = {2001}
+}
+
