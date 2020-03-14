@@ -60,8 +60,10 @@ sql2 = """select t.track_id,ts.start as secstart,'section' as type,substr(a.rele
     album a on at.album_id = a.id left outer join 
         track_section ts on ts.track_id = t.track_id order by t.track_id,secstart"""
         
-sql3 = """ select t.track_id,tb.start as bar_start,tb.duration as bar_duration,'bar' as type from track t left outer join 
-        track_bar tb on tb.track_id = t.track_id order by t.track_id, bar_start"""
+sql3 = """ select t.track_id,tb.start as bar_start,tb.duration as bar_duration,  
+        substr(a.release_date,1,4) as release_date from track t left outer join 
+        track_bar tb on tb.track_id = t.track_id left outer join album_track at on at.track_id = t.track_id 
+        left outer join album a on at.album_id = a.id order by t.track_id, bar_start"""
 
 
 #df1 = pd.read_sql(sql2,conn)
