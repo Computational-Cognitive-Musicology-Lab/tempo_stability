@@ -56,14 +56,19 @@ sql = sql + "order by t.track_id,secstart,bar_start limit 1000"
     #     songwriter.writerow(csvrow)
 
 sql2 = """select t.track_id,ts.start as secstart,'section' as type,substr(a.release_date,1,4) as release_date 
-    from track t left outer join album_track at on at.track_id = t.track_id left outer join 
-    album a on at.album_id = a.id left outer join 
-        track_section ts on ts.track_id = t.track_id order by t.track_id,secstart"""
+            from track t left outer join album_track at on at.track_id = t.track_id left outer join 
+            album a on at.album_id = a.id left outer join 
+            track_section ts on ts.track_id = t.track_id order by t.track_id,secstart"""
         
 sql3 = """ select t.track_id,tb.start as bar_start,tb.duration as bar_duration,  
-        substr(a.release_date,1,4) as release_date from track t left outer join 
+        substr(a.release_date,1,4) as release_date,a.label,a.popularity,ar.genres,ar.popularity as artist_popularity,
+        ar.followers from track t left outer join 
         track_bar tb on tb.track_id = t.track_id left outer join album_track at on at.track_id = t.track_id 
-        left outer join album a on at.album_id = a.id order by t.track_id, bar_start"""
+        left outer join album a on at.album_id = a.id left outer join album_artist aa on 
+        aa.album_id = a.id left outer join 
+        artist ar on ar.id = aa.artist_id   
+        where t.track_id in (select track_id from legal_tracks) 
+        order by t.track_id, bar_start"""
 
 
 #df1 = pd.read_sql(sql2,conn)
@@ -79,6 +84,7 @@ df2 = df2.rename(columns={'bar_start':'start'})
 #df1['secname'].fillna(method='ffill',inplace=True)
 df2['bar_mean'] = df2.groupby('track_id')['bar_duration'].transform('mean')
 df2['bar_stdev'] = df2.groupby('track_id')['bar_duration'].transform('std')
+df2['bar_stdev_normalized'] = df2['bar_stdev'] / df2['bar_mean']
 df2['bar_max'] = df2.groupby('track_id')['bar_duration'].transform('max')
 df2['bar_min'] = df2.groupby('track_id')['bar_duration'].transform('min')
 df2['bar_diff'] = df2.groupby('track_id')['bar_duration'].diff()
@@ -104,7 +110,7 @@ df2['region_2pct_bar_count'] = df2.groupby(['track_id','region_2pct_cumsum'])['r
 # df2.drop(indexnames,inplace=True)
 df2 = df2.drop(columns=['start','bar_duration','bar_diff','bar_diff_normalized','region_5pct','region_2pct'])
 df2 = df2.drop_duplicates()
-df2.to_csv('song_data_section_tempo_with_bars_only.csv')
+df2.to_csv('song_data_section_tempo_with_bars_only_legal_tracks.csv')
 
 
 
